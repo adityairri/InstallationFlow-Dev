@@ -42,7 +42,7 @@ app.get('/readyForInstallation/:date', readyForInstallation);
 
 
 var reconfirm = require('./backbone/reconfirm');
-app.use('/reconfirm/:date',reconfirm);
+app.use('/reconfirm/:date/:pageNo',reconfirm);
 app.use('/confirmFarmerReconfirmDate/:orderId',reconfirm);
 
 

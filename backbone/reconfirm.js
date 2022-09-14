@@ -35,8 +35,9 @@ module.exports = function () {
 
 
   
-    app.get("/reconfirm/:date", async function (req, res) {
+    app.get("/reconfirm/:date/:pageNo", async function (req, res) {
     if (req.params.date == "0") {
+      var page = req.params.pageNo;
         var fromDate = new Date(+new Date().setHours(0, 0, 0, 0) + 86400000).toLocaleDateString("fr-CA")  + " 00:00";
         var toDate = fromDate;
         var reqBody = JSON.stringify({
@@ -48,6 +49,7 @@ module.exports = function () {
         });
       } else {
         var req = req.params;
+        var page = req.pageNo;
         var fromDate = req.date + " 00:00";
         var toDate = fromDate;
         var reqBody = JSON.stringify({
@@ -61,7 +63,7 @@ module.exports = function () {
    
 
     const resp = await fetch(
-      "http://45.79.117.26:8000/api/getInstallationSchedule/",
+      "http://45.79.117.26:8000/api/getInstallationSchedule/?page="+parseInt(page)+"",
       {
         method: "post",
         body: reqBody,
@@ -101,6 +103,12 @@ module.exports = function () {
       await getInstallationCompletedList();
       res.render("reconfirm", {
         data1: daata,
+
+        dataPaginationNext: data.links.next,
+        dataPaginationPrevious: data.links.previous,
+        dataPaginationPageNo: data.page.page,
+        dataPaginationTotalPages: data.page.pages,
+
         newOrdersCount: newOrdersCount,
         reconfirmOrdersCount: daata.length,
         

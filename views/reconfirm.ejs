@@ -35,6 +35,8 @@
   <link href="css/themes/all-themes.css" rel="stylesheet" />
   <script>
     localStorage.clear();
+    // var pathArray = window.location.pathname.split('/');
+    // localStorage.setItem("pageNo", pathArray[3]);                     
   </script>
   <script>
     $("#dateTime").datetimepicker({
@@ -155,7 +157,7 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" onclick="window.location='/reconfirm/0';">
+          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" onclick="window.location='/reconfirm/0/1';">
             <div class="info-box-4 hover-zoom-effect bg-teal">
               <div class="content">
                 <div class="text"><b>RECONFIRM</b></div>
@@ -307,7 +309,7 @@
                             onchange="handler(event)">
                     </div>
                     <div class="col-lg-2 col-md-2">
-                        <a href="reconfirm/0" id="dateFilter">
+                        <a href="reconfirm/0/1" id="dateFilter">
                             <button type="button" class="btn bg-teal waves-effect">
                                 <i class="material-icons">search</i>
                             </button>
@@ -316,7 +318,7 @@
                     <script>
                         function handler(e) {
                             var date = e.target.value;
-                            url = "/reconfirm/" + date;
+                            url = "/reconfirm/" + date +"/1";
                             $("#dateFilter").attr("href", url);
                             return true;
                         }
@@ -465,6 +467,38 @@
                     </tr>
                     <% }) %>
                 </tbody>
+                <nav>
+                  <ul class="pagination">
+                    <% if(dataPaginationPrevious==null){%>
+                      <li class="disabled">
+                          <a href="javascript:void(0);">
+                              <i class="material-icons">chevron_left</i>
+                          </a>
+                      </li>
+                      <%}else{%>
+                        <li>
+                          <a href="/page/<%=dataPaginationPageNo-1%>">
+                              <i class="material-icons">chevron_left</i>
+                          </a>
+                      </li>
+                      <%}%>
+                      <li class="active"><a href="javascript:void(0);">Page <%=dataPaginationPageNo%> of <%=dataPaginationTotalPages%></a></li>
+
+                      <% if(dataPaginationNext==null){%>
+                        <li class="disabled">
+                            <a href="javascript:void(0);">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </li>
+                        <%}else{%>
+                          <li>
+                            <a href="/page/<%=dataPaginationPageNo+1%>">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </li>
+                        <%}%>
+                  </ul>
+              </nav>
               </table>
 
             </div>

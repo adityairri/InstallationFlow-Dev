@@ -165,6 +165,7 @@ module.exports = function () {
         dataPaginationNext: data.links.next,
         dataPaginationPrevious: data.links.previous,
         dataPaginationPageNo: data.page.page,
+        dataPaginationTotalPages: data.page.pages,
         newOrdersCount: data.page.count,
         reconfirmOrdersCount: reconfirmOrdersCount,
 
@@ -254,6 +255,7 @@ module.exports = function () {
         dataPaginationNext: data.links.next,
         dataPaginationPrevious: data.links.previous,
         dataPaginationPageNo: data.page.page,
+        dataPaginationTotalPages: data.page.pages,
         newOrdersCount: data.page.count,
         reconfirmOrdersCount: reconfirmOrdersCount,
 
