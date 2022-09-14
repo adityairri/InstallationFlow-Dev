@@ -113,17 +113,15 @@ module.exports = function () {
     // console.log(reqBody);
   });
 
-  var finalRenderData = [];
-  var farmDetailsArray = [];
+
   app.get("/", async function (req, res) {
     var reqBody = JSON.stringify({
       filter: {
         status: "NEW_ORDER",
       },
     });
-    const resp = await fetch(
-      "http://45.79.117.26:8000/api/getInstallationSchedule/",
-      {
+    var UATurl = "http://45.79.117.26:8000/api/getInstallationSchedule/?page=1"
+    const resp = await fetch(UATurl,{
         method: "post",
         body: reqBody,
         headers: {
@@ -164,6 +162,9 @@ module.exports = function () {
       
       res.render("index", {
         data1: daata,
+        dataPaginationNext: data.links.next,
+        dataPaginationPrevious: data.links.previous,
+        dataPaginationPageNo: data.page.page,
         newOrdersCount: data.page.count,
         reconfirmOrdersCount: reconfirmOrdersCount,
 
@@ -187,6 +188,94 @@ module.exports = function () {
     });
   });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  app.get("/page/:pageNo", async function (req, res) {
+    var reqBody = JSON.stringify({
+      filter: {
+        status: "NEW_ORDER",
+      },
+    });
+    var UATurl = "http://45.79.117.26:8000/api/getInstallationSchedule/?page="+req.params.pageNo+"";
+    const resp = await fetch(UATurl,{
+        method: "post",
+        body: reqBody,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Token 4861d9484816c25e94be97410fd9f1ffa0b0c1fd",
+        },
+      }
+    );
+    var daata = [];
+    await resp.json().then(async (data) => {
+      data.results.forEach(async (singleInData) => {
+        var wooCommerseID = singleInData.order.woo_commerce_order_id;
+        await getRemarksList(wooCommerseID);
+        // console.log(remarks);
+        daata.push({
+          remarks: remarks,
+          data: singleInData,
+        });
+      });
+      
+      console.log(daata);
+      await getSErescheduledOrders();
+      await getSMrescheduledOrders();
+      await getFarmerRescheduledOrders();
+
+      await getReconfirmOrdersCount();
+      await getReadyToInstallCount();
+      await getAssignedToSECount();
+      await getSePendingList();
+      await getSeAcceptedList();
+      await getSeDeclinedList();
+      await getFarmerPendingList();
+      await getFarmerAcceptedList();
+      await getFarmerDeclinedList();
+      await getInstallationPendingList();
+      await getInstallationPartialCompleteList();
+      await getInstallationCompletedList();
+      
+      res.render("index", {
+        data1: daata,
+        dataPaginationNext: data.links.next,
+        dataPaginationPrevious: data.links.previous,
+        dataPaginationPageNo: data.page.page,
+        newOrdersCount: data.page.count,
+        reconfirmOrdersCount: reconfirmOrdersCount,
+
+        SErescheduledOrders: SErescheduledOrders,
+        SMrescheduledOrders: SMrescheduledOrders,
+        FarmerRescheduledOrders: FarmerRescheduledOrders,
+        totalRescheduleCount: SErescheduledOrders + SMrescheduledOrders + FarmerRescheduledOrders,
+
+        readyToInstallCount: readyToInstallCount,
+        assignedToSECount: assignedToSECount1,
+        sePendingList: sePendingList,
+        seAcceptedList: seAcceptedList,
+        seDeclinedList: seDeclinedList,
+        farmerPendingList: farmerPendingList,
+        farmerAcceptedList: farmerAcceptedList,
+        farmerDeclinedList: farmerDeclinedList,
+        installationPendingList: installationPendingList,
+        installationPartialCompleteList: installationPartialCompleteList,
+        installationCompletedList: installationCompletedList,
+      });
+    });
+  });
   var SErescheduledOrders;
   async function getSErescheduledOrders(req, res) {
     var reqBody = JSON.stringify({

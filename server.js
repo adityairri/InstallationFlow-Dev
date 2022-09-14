@@ -32,6 +32,7 @@ require('./backbone/installationStatus')();
 
 var index = require('./backbone/index');
 app.use('/',index);
+app.use('/page/:pageNo',index);
 app.get('/assignDate/:orderID/:farmID/:date/:time/:remarks', index);
 app.get('/addRemarks/:id/:remarks', index);
 app.get('/assignFollowupDate/:id/:remarks/:followupDate', index);

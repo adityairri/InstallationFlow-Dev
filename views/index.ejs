@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <base href="/">
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -639,6 +640,38 @@
                     </tr>
                     <% }) %>
                 </tbody>
+                <nav>
+                  <ul class="pagination">
+                    <% if(dataPaginationPrevious==null){%>
+                      <li class="disabled">
+                          <a href="javascript:void(0);">
+                              <i class="material-icons">chevron_left</i>
+                          </a>
+                      </li>
+                      <%}else{%>
+                        <li>
+                          <a href="/page/<%=dataPaginationPageNo-1%>">
+                              <i class="material-icons">chevron_left</i>
+                          </a>
+                      </li>
+                      <%}%>
+                      <li class="active"><a href="javascript:void(0);"><%=dataPaginationPageNo%></a></li>
+
+                      <% if(dataPaginationNext==null){%>
+                        <li class="disabled">
+                            <a href="javascript:void(0);">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </li>
+                        <%}else{%>
+                          <li>
+                            <a href="/page/<%=dataPaginationPageNo+1%>">
+                                <i class="material-icons">chevron_right</i>
+                            </a>
+                        </li>
+                        <%}%>
+                  </ul>
+              </nav>
               </table>
 
               <!-- <button type="button" class="btn bg-indigo btn-circle-lg waves-effect waves-circle waves-float">
