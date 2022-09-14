@@ -200,18 +200,17 @@ module.exports = function () {
       await getInstallationPartialCompleteList();
       await getInstallationCompletedList();
       res.render("seResponseStatus", {
-        data1: data,
+        data1: data.results,
         variables: variables,
-        SEassignedCount: data.length,
-        dateUnassignedCount: dateUnassignedCount1.length,
+        dateUnassignedCount: dateUnassignedCount,
         reconfirmOrdersCount: reconfirmOrdersCount,
         
         SErescheduledOrders: SErescheduledOrders,
         SMrescheduledOrders: SMrescheduledOrders,
         FarmerRescheduledOrders: FarmerRescheduledOrders,
-        totalRescheduleCount: SErescheduledOrders.length+SMrescheduledOrders.length+FarmerRescheduledOrders.length,
+        totalRescheduleCount: SErescheduledOrders+SMrescheduledOrders+FarmerRescheduledOrders,
 
-        dateAssignedCount: dateAssignedCount1.length,
+        dateAssignedCount: dateAssignedCount,
         seList: SElist,
         sePendingList: sePendingList,
         seAcceptedList: seAcceptedList,
@@ -246,24 +245,6 @@ module.exports = function () {
     });
   }
 
-  // var SEassignedCount;
-  // async function getSEassignedCount(req, res) {
-  //   const resp = await fetch(
-  //     "http://45.79.117.26:8000/api/assignedorderforse/",
-  //     {
-  //       method: "post",
-  //       body: reqBody,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "Authorization": "Token 4861d9484816c25e94be97410fd9f1ffa0b0c1fd",
-  //       },
-  //     }
-  //   );
-  //   await resp.json().then((dataa) => {
-  //     console.log(dataa);
-  //     SEassignedCount = dataa;
-  //   });
-  // }
 
 
   var reconfirmOrdersCount;
@@ -284,9 +265,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      // console.log(dataa);
-      reconfirmOrdersCount = dataa;
+    await resp.json().then((data) => {
+      reconfirmOrdersCount = data.page.count;
     });
   }
 
@@ -311,16 +291,7 @@ module.exports = function () {
     );
     var daata = [];
     await resp.json().then((data) => {
-        data.forEach(async singleInData => {
-            var wooCommerseID = singleInData.order.woo_commerce_order_id;
-            var a = await getRemarksList(wooCommerseID);
-            // console.log(remarks);
-            daata.push({
-              'remarks': remarks,
-              'data': singleInData
-            })
-          });
-      SErescheduledOrders = daata;
+      SErescheduledOrders = data.page.count;
     });
   }
 
@@ -344,16 +315,7 @@ module.exports = function () {
     );
     var daata = [];
     await resp.json().then((data) => {
-        data.forEach(async singleInData => {
-            var wooCommerseID = singleInData.order.woo_commerce_order_id;
-            var a = await getRemarksList(wooCommerseID);
-            // console.log(remarks);
-            daata.push({
-              'remarks': remarks,
-              'data': singleInData
-            })
-          });
-      SMrescheduledOrders = daata;
+      SMrescheduledOrders = data.page.count;
     });
   }
 
@@ -377,16 +339,7 @@ module.exports = function () {
     );
     var daata = [];
     await resp.json().then((data) => {
-        data.forEach(async singleInData => {
-            var wooCommerseID = singleInData.order.woo_commerce_order_id;
-            var a = await getRemarksList(wooCommerseID);
-            // console.log(remarks);
-            daata.push({
-              'remarks': remarks,
-              'data': singleInData
-            })
-          });
-      FarmerRescheduledOrders = daata;
+      FarmerRescheduledOrders = data.page.count;
     });
   }
 
@@ -409,9 +362,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      sePendingList = dataa;
+    await resp.json().then((data) => {
+      sePendingList = data.page.count;
     });
   }
 
@@ -435,9 +387,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      seAcceptedList = dataa;
+    await resp.json().then((data) => {
+      seAcceptedList = data.page.count;
     });
   }
 
@@ -461,59 +412,14 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      seDeclinedList = dataa;
+    await resp.json().then((data) => {
+      seDeclinedList = data.page.count;
     });
   }
 
 
-
-  app.get("/doActions/:orderID/:actionID", async function (req, res) {
-    var actionID = req.params.actionID;
-    var orderID = req.params.orderID;
-    if (actionID == "1") {
-      var reqBody = JSON.stringify({
-        id: parseInt(orderID),
-        schedulestatus: "SEND_FARMER_CONFIRM",
-      });
-    }if (actionID == "2") {
-      var reqBody = JSON.stringify({
-        id: parseInt(orderID),
-        schedulestatus: "CANCELLED_SE",
-      });
-    }if (actionID == "3") {
-      var reqBody = JSON.stringify({
-        id: parseInt(orderID),
-        schedulestatus: "CANCELLED_SE",
-      });
-    }
-    // var reqBody = JSON.stringify({
-    //   id: parseInt(req.orderID),
-    //   service_engineer: req.SEid,
-    //   schedulestatus: "ASSIGNED_SE",
-    // });
-    // const resp = await fetch(
-    //   "http://45.79.117.26:8000/api/updateInstallationSchedule/",
-    //   {
-    //     method: "post",
-    //     body: reqBody,
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       "Authorization": "Token 4861d9484816c25e94be97410fd9f1ffa0b0c1fd",
-    //     },
-    //   }
-    // );
-
-    // await resp.json().then((data) => {
-    //   console.log(data);
-    //   res.redirect("/readyForInstallation/0");
-    // });
-    // console.log(reqBody);
-  });
-
   // -------------------------------------------- Counts Functions----------------------------------
-  var dateUnassignedCount1;
+  var dateUnassignedCount;
   async function getDateUnassignedCount(req, res) {
     var reqBody = JSON.stringify({
       filter: {
@@ -531,13 +437,12 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      dateUnassignedCount1 = dataa;
+    await resp.json().then((data) => {
+      dateUnassignedCount = data.page.count;
     });
   }
 
-  var dateAssignedCount1;
+  var dateAssignedCount;
   async function getDateAssignedCount(req, res) {
     var reqBody = JSON.stringify({
       filter: {
@@ -555,9 +460,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      dateAssignedCount1 = dataa;
+    await resp.json().then((data) => {
+      dateAssignedCount = data.page.count;
     });
   }
 
@@ -580,9 +484,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      farmerPendingList = dataa;
+    await resp.json().then((data) => {
+      farmerPendingList = data.page.count;
     });
   }
 
@@ -605,9 +508,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      farmerAcceptedList = dataa;
+    await resp.json().then((data) => {
+      farmerAcceptedList = data.page.count;
     });
   }
 
@@ -630,9 +532,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      farmerDeclinedList = dataa;
+    await resp.json().then((data) => {
+      farmerDeclinedList = data.page.count;
     });
   }
 
@@ -655,9 +556,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      installationPendingList = dataa;
+    await resp.json().then((data) => {
+      installationPendingList = data.page.count;
     });
   }
 
@@ -680,9 +580,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      installationPartialCompleteList = dataa;
+    await resp.json().then((data) => {
+      installationPartialCompleteList = data.page.count;
     });
   }
 
@@ -705,9 +604,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      installationCompletedList = dataa;
+    await resp.json().then((data) => {
+      installationCompletedList = data.page.count;
     });
   }
 

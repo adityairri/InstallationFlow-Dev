@@ -78,17 +78,17 @@ module.exports = function () {
       await getInstallationPartialCompleteList();
       await getInstallationCompletedList();
       res.render("farmerResponseStatus", {
-        data1: data,
+        data1: data.results,
         variables: variables,
-        OpenOrdersCount: OpenOrdersCount.length,
+        OpenOrdersCount: OpenOrdersCount,
         reconfirmOrdersCount: reconfirmOrdersCount,
        
         SErescheduledOrders: SErescheduledOrders,
         SMrescheduledOrders: SMrescheduledOrders,
         FarmerRescheduledOrders: FarmerRescheduledOrders,
-        totalRescheduleCount: SErescheduledOrders.length+SMrescheduledOrders.length+FarmerRescheduledOrders.length,
+        totalRescheduleCount: SErescheduledOrders+SMrescheduledOrders+FarmerRescheduledOrders,
 
-        ReadyForInstallationCount: ReadyForInstallationCount.length,
+        ReadyForInstallationCount: ReadyForInstallationCount,
         sePendingList: sePendingList,
         seAcceptedList: seAcceptedList,
         seDeclinedList: seDeclinedList,
@@ -162,9 +162,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      OpenOrdersCount = dataa;
+    await resp.json().then((data) => {
+      OpenOrdersCount = data.page.count;
     });
   }
 
@@ -187,9 +186,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      // console.log(dataa);
-      reconfirmOrdersCount = dataa;
+    await resp.json().then((data) => {
+      reconfirmOrdersCount = data.page.count;
     });
   }
 
@@ -213,16 +211,7 @@ var SErescheduledOrders;
     );
     var daata = [];
     await resp.json().then((data) => {
-        data.forEach(async singleInData => {
-            var wooCommerseID = singleInData.order.woo_commerce_order_id;
-            var a = await getRemarksList(wooCommerseID);
-            // console.log(remarks);
-            daata.push({
-              'remarks': remarks,
-              'data': singleInData
-            })
-          });
-      SErescheduledOrders = daata;
+      SErescheduledOrders = data.page.count;
     });
   }
 
@@ -246,16 +235,7 @@ var SErescheduledOrders;
     );
     var daata = [];
     await resp.json().then((data) => {
-        data.forEach(async singleInData => {
-            var wooCommerseID = singleInData.order.woo_commerce_order_id;
-            var a = await getRemarksList(wooCommerseID);
-            // console.log(remarks);
-            daata.push({
-              'remarks': remarks,
-              'data': singleInData
-            })
-          });
-      SMrescheduledOrders = daata;
+      SMrescheduledOrders = data.page.count;
     });
   }
 
@@ -279,16 +259,7 @@ var SErescheduledOrders;
     );
     var daata = [];
     await resp.json().then((data) => {
-        data.forEach(async singleInData => {
-            var wooCommerseID = singleInData.order.woo_commerce_order_id;
-            var a = await getRemarksList(wooCommerseID);
-            // console.log(remarks);
-            daata.push({
-              'remarks': remarks,
-              'data': singleInData
-            })
-          });
-      FarmerRescheduledOrders = daata;
+      FarmerRescheduledOrders = data.page.count;
     });
   }
 
@@ -311,9 +282,8 @@ var SErescheduledOrders;
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      ReadyForInstallationCount = dataa;
+    await resp.json().then((data) => {
+      ReadyForInstallationCount = data.page.count;
     });
   }
 
@@ -335,9 +305,8 @@ var SErescheduledOrders;
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      sePendingList = dataa;
+    await resp.json().then((data) => {
+      sePendingList = data.page.count;
     });
   }
 
@@ -359,9 +328,8 @@ var SErescheduledOrders;
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      seAcceptedList = dataa;
+    await resp.json().then((data) => {
+      seAcceptedList = data.page.count;
     });
   }
 
@@ -383,9 +351,8 @@ var SErescheduledOrders;
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      seDeclinedList = dataa;
+    await resp.json().then((data) => {
+      seDeclinedList = data.page.count;
     });
   }
 
@@ -407,9 +374,8 @@ var SErescheduledOrders;
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      farmerPendingList = dataa;
+    await resp.json().then((data) => {
+      farmerPendingList = data.page.count;
     });
   }
 
@@ -431,9 +397,8 @@ var SErescheduledOrders;
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      farmerAcceptedList = dataa;
+    await resp.json().then((data) => {
+      farmerAcceptedList = data.page.count;
     });
   }
 
@@ -455,9 +420,8 @@ var SErescheduledOrders;
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      farmerDeclinedList = dataa;
+    await resp.json().then((data) => {
+      farmerDeclinedList = data.page.count;
     });
   }
 
@@ -480,9 +444,8 @@ var SErescheduledOrders;
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      installationPendingList = dataa;
+    await resp.json().then((data) => {
+      installationPendingList = data.page.count;
     });
   }
 
@@ -505,9 +468,8 @@ var SErescheduledOrders;
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      installationPartialCompleteList = dataa;
+    await resp.json().then((data) => {
+      installationPartialCompleteList = data.page.count;
     });
   }
 
@@ -530,9 +492,8 @@ var SErescheduledOrders;
         },
       }
     );
-    await resp.json().then((dataa) => {
-      console.log(dataa);
-      installationCompletedList = dataa;
+    await resp.json().then((data) => {
+      installationCompletedList = data.page.count;
     });
   }
 

@@ -27,8 +27,6 @@
   <!-- Morris Chart Css-->
   <link href="plugins/morrisjs/morris.css" rel="stylesheet" />
 
-  <!-- JQuery DataTable Css -->
-  <link href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
 
   <!-- Custom Css -->
   <link href="css/style.css" rel="stylesheet">
@@ -152,7 +150,7 @@
             <div class="info-box-4 hover-zoom-effect">
               <div class="content">
                 <div class="text"><b>OPEN ORDERS</b></div>
-                <div class="number count-to" data-from="0" data-to="<%=newOrdersCount.length%>" data-speed="2"
+                <div class="number count-to" data-from="0" data-to="<%=newOrdersCount%>" data-speed="2"
                   data-fresh-interval="20"></div>
               </div>
             </div>
@@ -161,7 +159,7 @@
             <div class="info-box-4 hover-zoom-effect">
               <div class="content">
                 <div class="text"><b>RECONFIRM</b></div>
-                <div class="number count-to" data-from="0" data-to="<%=reconfirmOrdersCount.length%>" data-speed="2"
+                <div class="number count-to" data-from="0" data-to="<%=reconfirmOrdersCount%>" data-speed="2"
                   data-fresh-interval="20">
                 </div>
               </div>
@@ -171,7 +169,7 @@
             <div class="info-box-4 hover-zoom-effect">
                 <div class="content">
                     <div class="text"><b>READY FOR INSTALLATION</b></div>
-                    <div class="number count-to" data-from="0" data-to="<%=readyToInstallCount.length%>" data-speed="2" data-fresh-interval="20">
+                    <div class="number count-to" data-from="0" data-to="<%=readyToInstallCount%>" data-speed="2" data-fresh-interval="20">
                     </div>
                 </div>
             </div>
@@ -206,19 +204,19 @@
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                       onclick="window.location='/seResponseStatus/0/pending';">
                       Pending </br> <b>
-                        <%=sePendingList.length%>
+                        <%=sePendingList%>
                       </b>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                       onclick="window.location='/seResponseStatus/0/accepted';">
                       Accepted </br><b>
-                        <%=seAcceptedList.length%>
+                        <%=seAcceptedList%>
                       </b>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                       onclick="window.location='/seResponseStatus/0/declined';">
                       Declined </br><b>
-                        <%=seDeclinedList.length%>
+                        <%=seDeclinedList%>
                       </b>
                     </div>
                   </div>
@@ -237,19 +235,19 @@
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                       onclick="window.location='/viewFarmerStatus/pending';">
                       Pending </br><b>
-                        <%=farmerPendingList.length%>
+                        <%=farmerPendingList%>
                       </b>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                       onclick="window.location='/viewFarmerStatus/accepted';">
                       Accepted </br><b>
-                        <%=farmerAcceptedList.length%>
+                        <%=farmerAcceptedList%>
                       </b>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                       onclick="window.location='/viewFarmerStatus/cancelled';">
                       Cancelled </br><b>
-                        <%=farmerDeclinedList.length%>
+                        <%=farmerDeclinedList%>
                       </b>
                     </div>
                   </div>
@@ -268,19 +266,19 @@
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                       onclick="window.location='/viewInstallationStatus/pending';">
                       In Progress </br><b>
-                        <%=installationPendingList.length%>
+                        <%=installationPendingList%>
                       </b>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                       onclick="window.location='/viewInstallationStatus/partial';">
                       Partial </br><b>
-                        <%=installationPartialCompleteList.length%>
+                        <%=installationPartialCompleteList%>
                       </b>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                       onclick="window.location='/viewInstallationStatus/completed';">
                       Completed </br><b>
-                        <%=installationCompletedList.length%>
+                        <%=installationCompletedList%>
                       </b>
                     </div>
                   </div>
@@ -293,6 +291,7 @@
 
       <!-- #END# Widgets -->
 
+      <% if(SErescheduledOrders[0].count!=0){%>
       <!-- Hover Rows -->
       <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -316,7 +315,7 @@
               </ul>
             </div>
             <div class="body table-responsive">
-              <table class="table table-bordered table-striped table-hover js-basic-example dataTable" id="seRescheduleTable">
+              <table class="table table-bordered table-striped table-hover js-basic-example">
                 <thead>
                   <tr>
                     <th style="text-align: center;">ORDER ID</th>
@@ -462,6 +461,7 @@
         </div>
       </div>
       <!-- #END# Hover Rows -->
+      <%}%>
 
 
 
@@ -471,8 +471,7 @@
 
 
 
-
-
+      <% if(SMrescheduledOrders[0].count!=0){%>
       <!-- Hover Rows -->
       <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -496,7 +495,7 @@
               </ul>
             </div>
             <div class="body table-responsive">
-              <table class="table table-bordered table-striped table-hover js-basic-example dataTable" id="smRescheduleTable">
+              <table class="table table-bordered table-striped table-hover js-basic-example">
                 <thead>
                   <tr>
                     <th style="text-align: center;">ORDER ID</th>
@@ -642,6 +641,7 @@
         </div>
       </div>
       <!-- #END# Hover Rows -->
+      <%}%>
 
 
 
@@ -650,8 +650,7 @@
 
 
 
-
-
+      <% if(FarmerRescheduledOrders[0].count!=0){%>
       <!-- Hover Rows -->
       <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -675,7 +674,7 @@
               </ul>
             </div>
             <div class="body table-responsive">
-              <table class="table table-bordered table-striped table-hover js-basic-example dataTable" id="farmRescheduleTable">
+              <table class="table table-bordered table-striped table-hover js-basic-example">
                 <thead>
                   <tr>
                     <th style="text-align: center;">ORDER ID</th>
@@ -821,17 +820,15 @@
         </div>
       </div>
       <!-- #END# Hover Rows -->
+      <%}%>
+
+
+
+
+
     </div>
 
   </section>
-
-  <script>
-    $(document).ready( function () {
-    $('#seRescheduleTable').DataTable();
-    $('#smRescheduleTable').DataTable();
-    $('#farmRescheduleTable').DataTable();
-} );
-  </script>
 
 
   <!-- Jquery Core Js -->
@@ -841,8 +838,6 @@
   <!-- Bootstrap Core Js -->
   <script src="plugins/bootstrap/js/bootstrap.js"></script>
 
-  <!-- Jquery DataTable Plugin Js -->
-  <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 
   <!-- Slimscroll Plugin Js -->
   <script src="plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
