@@ -5,14 +5,17 @@ var axios = require("axios");
 var fetch = require("cross-fetch");
 
 module.exports = function () {
-  app.get("/rescheduled", async function (req, res) {
+  app.get("/rescheduled/:SMpageNo/:SEpageNo/:FarPageNo", async function (req, res) {
   
+    var SMpageNo = req.params.SMpageNo;
+    var SEpageNo = req.params.SEpageNo;
+    var FarPageNo = req.params.FarPageNo;
     await getNewOrdersCount();
     await getReconfirmOrdersCount();
 
-    await getSErescheduledOrders();
-    await getSMrescheduledOrders();
-    await getFarmerRescheduledOrders();
+    await getSErescheduledOrders(SEpageNo);
+    await getSMrescheduledOrders(SMpageNo);
+    await getFarmerRescheduledOrders(FarPageNo);
 
     await getReadyToInstallCount();
     await getSePendingList();
@@ -55,7 +58,7 @@ module.exports = function () {
       },
     });
     const resp = await fetch(
-      "http://45.79.117.26:8000/api/getInstallationSchedule/",
+      "http://45.79.117.26:8000/api/getInstallationSchedule/?page="+parseInt(req),
       {
         method: "post",
         body: reqBody,
@@ -74,6 +77,10 @@ module.exports = function () {
             var a = await getRemarksList(wooCommerseID);
             // console.log(remarks);
             daata.push({
+              'SEdataPaginationNext': data.links.next,
+              'SEdataPaginationPrevious': data.links.previous,
+              'SEdataPaginationPageNo': data.page.page,
+              'SEdataPaginationTotalPages': data.page.pages,
               'count': data.page.count,
               'remarks': remarks,
               'data': singleInData
@@ -81,6 +88,10 @@ module.exports = function () {
           });
         }else{
           daata.push({
+            'SEdataPaginationNext': null,
+            'SEdataPaginationPrevious': null,
+            'SEdataPaginationPageNo': 1,
+            'SEdataPaginationTotalPages': 1,
             'count': 0,
             'remarks': '',
             'data': []
@@ -99,7 +110,7 @@ module.exports = function () {
       },
     });
     const resp = await fetch(
-      "http://45.79.117.26:8000/api/getInstallationSchedule/",
+      "http://45.79.117.26:8000/api/getInstallationSchedule/?page="+parseInt(req),
       {
         method: "post",
         body: reqBody,
@@ -117,6 +128,10 @@ module.exports = function () {
             var a = await getRemarksList(wooCommerseID);
             // console.log(remarks);
             daata.push({
+              'SMdataPaginationNext': data.links.next,
+              'SMdataPaginationPrevious': data.links.previous,
+              'SMdataPaginationPageNo': data.page.page,
+              'SMdataPaginationTotalPages': data.page.pages,
               'count': data.page.count,
               'remarks': remarks,
               'data': singleInData
@@ -124,6 +139,10 @@ module.exports = function () {
           });
         }else{
           daata.push({
+            'SMdataPaginationNext': null,
+              'SMdataPaginationPrevious': null,
+              'SMdataPaginationPageNo': 1,
+              'SMdataPaginationTotalPages': 1,
             'count': 0,
             'remarks': '',
             'data': []
@@ -142,7 +161,7 @@ module.exports = function () {
       },
     });
     const resp = await fetch(
-      "http://45.79.117.26:8000/api/getInstallationSchedule/",
+      "http://45.79.117.26:8000/api/getInstallationSchedule/?page="+parseInt(req),
       {
         method: "post",
         body: reqBody,
@@ -160,6 +179,10 @@ module.exports = function () {
             var a = await getRemarksList(wooCommerseID);
             // console.log(remarks);
             daata.push({
+              'farDataPaginationNext': data.links.next,
+              'farDataPaginationPrevious': data.links.previous,
+              'farDataPaginationPageNo': data.page.page,
+              'farDataPaginationTotalPages': data.page.pages,
               'count': data.page.count,
               'remarks': remarks,
               'data': singleInData
@@ -167,6 +190,10 @@ module.exports = function () {
           });
         }else{
           daata.push({
+            'farDataPaginationNext': null,
+            'farDataPaginationPrevious': null,
+            'farDataPaginationPageNo': 1,
+            'farDataPaginationTotalPages': 1,
             'count': 0,
             'remarks': '',
             'data': []

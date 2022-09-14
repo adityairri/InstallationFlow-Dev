@@ -47,7 +47,7 @@ app.use('/confirmFarmerReconfirmDate/:orderId',reconfirm);
 
 
 var reschedule = require('./backbone/reschedule');
-app.use('/rescheduled',reschedule);
+app.use('/rescheduled/:SMpageNo/:SEpageNo/:FarPageNo',reschedule);
 
 
 var seResponseStatus = require('./backbone/seResponseStatus');
