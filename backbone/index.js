@@ -134,7 +134,7 @@ module.exports = function () {
     );
     var daata = [];
     await resp.json().then(async (data) => {
-      data.forEach(async (singleInData) => {
+      data.results.forEach(async (singleInData) => {
         var wooCommerseID = singleInData.order.woo_commerce_order_id;
         await getRemarksList(wooCommerseID);
         // console.log(remarks);
@@ -164,16 +164,16 @@ module.exports = function () {
       
       res.render("index", {
         data1: daata,
-        newOrdersCount: data.length,
-        reconfirmOrdersCount: reconfirmOrdersCount.length,
+        newOrdersCount: data.page.count,
+        reconfirmOrdersCount: reconfirmOrdersCount,
 
         SErescheduledOrders: SErescheduledOrders,
         SMrescheduledOrders: SMrescheduledOrders,
         FarmerRescheduledOrders: FarmerRescheduledOrders,
-        totalRescheduleCount: SErescheduledOrders.length + SMrescheduledOrders.length + FarmerRescheduledOrders.length,
+        totalRescheduleCount: SErescheduledOrders + SMrescheduledOrders + FarmerRescheduledOrders,
 
-        readyToInstallCount: readyToInstallCount.length,
-        assignedToSECount: assignedToSECount1.length,
+        readyToInstallCount: readyToInstallCount,
+        assignedToSECount: assignedToSECount1,
         sePendingList: sePendingList,
         seAcceptedList: seAcceptedList,
         seDeclinedList: seDeclinedList,
@@ -203,19 +203,8 @@ module.exports = function () {
         },
       }
     );
-
-    var daata = [];
     await resp.json().then((data) => {
-      data.forEach(async (singleInData) => {
-        var wooCommerseID = singleInData.order.woo_commerce_order_id;
-        var a = await getRemarksList(wooCommerseID);
-        // console.log(remarks);
-        daata.push({
-          remarks: remarks,
-          data: singleInData,
-        });
-      });
-      SErescheduledOrders = daata;
+      SErescheduledOrders = data.page.count;
     });
   }
 
@@ -240,16 +229,7 @@ module.exports = function () {
     );
     var daata = [];
     await resp.json().then((data) => {
-      data.forEach(async (singleInData) => {
-        var wooCommerseID = singleInData.order.woo_commerce_order_id;
-        var a = await getRemarksList(wooCommerseID);
-        // console.log(remarks);
-        daata.push({
-          remarks: remarks,
-          data: singleInData,
-        });
-      });
-      SMrescheduledOrders = daata;
+      SMrescheduledOrders = data.page.count;
     });
   }
 
@@ -273,16 +253,7 @@ module.exports = function () {
     );
     var daata = [];
     await resp.json().then((data) => {
-      data.forEach(async (singleInData) => {
-        var wooCommerseID = singleInData.order.woo_commerce_order_id;
-        var a = await getRemarksList(wooCommerseID);
-        // console.log(remarks);
-        daata.push({
-          remarks: remarks,
-          data: singleInData,
-        });
-      });
-      FarmerRescheduledOrders = daata;
+      FarmerRescheduledOrders = data.page.count;
     });
   }
 
@@ -304,9 +275,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      // console.log(dataa);
-      readyToInstallCount = dataa;
+    await resp.json().then((data) => {
+      readyToInstallCount = data.page.count;
     });
   }
 
@@ -328,9 +298,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      // console.log(dataa);
-      reconfirmOrdersCount = dataa;
+    await resp.json().then((data) => {
+      reconfirmOrdersCount = data.page.count;
     });
   }
 
@@ -352,9 +321,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      // console.log(dataa);
-      assignedToSECount1 = dataa;
+    await resp.json().then((data) => {
+      assignedToSECount1 = data.page.count;
     });
   }
 
@@ -376,9 +344,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      // console.log(dataa);
-      sePendingList = dataa;
+    await resp.json().then((data) => {
+      sePendingList = data.page.count;
     });
   }
 
@@ -400,9 +367,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      // console.log(dataa);
-      seAcceptedList = dataa;
+    await resp.json().then((data) => {
+      seAcceptedList = data.page.count;
     });
   }
 
@@ -424,9 +390,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      // console.log(dataa);
-      seDeclinedList = dataa;
+    await resp.json().then((data) => {
+      seDeclinedList = data.page.count;
     });
   }
 
@@ -448,9 +413,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      // console.log(dataa);
-      farmerPendingList = dataa;
+    await resp.json().then((data) => {
+      farmerPendingList = data.page.count;
     });
   }
 
@@ -472,9 +436,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      // console.log(dataa);
-      farmerAcceptedList = dataa;
+    await resp.json().then((data) => {
+      farmerAcceptedList = data.page.count;
     });
   }
 
@@ -496,9 +459,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      // console.log(dataa);
-      farmerDeclinedList = dataa;
+    await resp.json().then((data) => {
+      farmerDeclinedList = data.page.count;
     });
   }
 
@@ -520,9 +482,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      // console.log(dataa);
-      installationPendingList = dataa;
+    await resp.json().then((data) => {
+      installationPendingList = data.page.count;
     });
   }
 
@@ -544,9 +505,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      // console.log(dataa);
-      installationPartialCompleteList = dataa;
+    await resp.json().then((data) => {
+      installationPartialCompleteList = data.page.count;
     });
   }
 
@@ -568,9 +528,8 @@ module.exports = function () {
         },
       }
     );
-    await resp.json().then((dataa) => {
-      // console.log(dataa);
-      installationCompletedList = dataa;
+    await resp.json().then((data) => {
+      installationCompletedList = data.page.count;
     });
   }
 

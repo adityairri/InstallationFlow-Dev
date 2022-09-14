@@ -198,19 +198,19 @@
                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                     onclick="window.location='/seResponseStatus/0/pending';">
                     Pending </br> <b>
-                      <%=sePendingList.length%>
+                      <%=sePendingList%>
                     </b>
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                     onclick="window.location='/seResponseStatus/0/accepted';">
                     Accepted </br><b>
-                      <%=seAcceptedList.length%>
+                      <%=seAcceptedList%>
                     </b>
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                     onclick="window.location='/seResponseStatus/0/declined';">
                     Declined </br><b>
-                      <%=seDeclinedList.length%>
+                      <%=seDeclinedList%>
                     </b>
                   </div>
                 </div>
@@ -229,19 +229,19 @@
                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                     onclick="window.location='/viewFarmerStatus/pending';">
                     Pending </br><b>
-                      <%=farmerPendingList.length%>
+                      <%=farmerPendingList%>
                     </b>
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                     onclick="window.location='/viewFarmerStatus/accepted';">
                     Accepted </br><b>
-                      <%=farmerAcceptedList.length%>
+                      <%=farmerAcceptedList%>
                     </b>
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                     onclick="window.location='/viewFarmerStatus/cancelled';">
                     Cancelled </br><b>
-                      <%=farmerDeclinedList.length%>
+                      <%=farmerDeclinedList%>
                     </b>
                   </div>
                 </div>
@@ -260,19 +260,19 @@
                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                     onclick="window.location='/viewInstallationStatus/pending';">
                     In Progress </br><b>
-                      <%=installationPendingList.length%>
+                      <%=installationPendingList%>
                     </b>
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                     onclick="window.location='/viewInstallationStatus/partial';">
                     Partial </br><b>
-                      <%=installationPartialCompleteList.length%>
+                      <%=installationPartialCompleteList%>
                     </b>
                   </div>
                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"
                     onclick="window.location='/viewInstallationStatus/completed';">
                     Completed </br><b>
-                      <%=installationCompletedList.length%>
+                      <%=installationCompletedList%>
                     </b>
                   </div>
                 </div>
@@ -308,7 +308,7 @@
               </ul>
             </div>
             <div class="body table-responsive">
-              <table class="table table-bordered table-striped table-hover js-basic-example dataTable" id="openOrdersTable">
+              <table class="table table-bordered table-striped table-hover js-basic-example">
                 <thead>
                   <tr>
                     <th style="text-align: center;">ORDER ID</th>
@@ -641,9 +641,9 @@
                 </tbody>
               </table>
 
-              <button type="button" class="btn bg-indigo btn-circle-lg waves-effect waves-circle waves-float">
+              <!-- <button type="button" class="btn bg-indigo btn-circle-lg waves-effect waves-circle waves-float">
                 <i class="material-icons float">add</i>
-              </button>
+              </button> -->
 
             </div>
           </div>
@@ -654,11 +654,6 @@
 
   </section>
 
-  <script>
-    $(document).ready( function () {
-    $('#openOrdersTable').DataTable();
-} );
-  </script>
   <!-- Jquery Core Js -->
   <script src="plugins/jquery/jquery.min.js"></script>
   <script src="js/pages/ui/tooltips-popovers.js"></script>
